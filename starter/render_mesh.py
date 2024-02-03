@@ -14,7 +14,7 @@ from starter.utils import get_device, get_mesh_renderer, load_cow_mesh
 
 
 def render_cow(
-    cow_path="data/cow.obj", image_size=256, color=[0.7, 0.7, 1], device=None,
+    cow_path="data/cow.obj", image_size=256, color=[0.7, 0.7, 1], device=None, R=None, T=None
 ):
     # The device tells us whether we are rendering with GPU or CPU. The rendering will
     # be *much* faster if you have a CUDA-enabled NVIDIA GPU. However, your code will
@@ -40,9 +40,14 @@ def render_cow(
     )
     mesh = mesh.to(device)
 
+    if R is None or T is None:
+        print("Using default camera position from started code")
+        R = torch.eye(3).unsqueeze(0)
+        T = torch.tensor([[0, 0, 3]])
+    
     # Prepare the camera:
     cameras = pytorch3d.renderer.FoVPerspectiveCameras(
-        R=torch.eye(3).unsqueeze(0), T=torch.tensor([[0, 0, 3]]), fov=60, device=device
+        R=R, T=T, fov=60, device=device
     )
 
     # Place a point light in front of the cow.
