@@ -44,6 +44,7 @@ def get_points_renderer(
             device = torch.device("cuda:0")
         else:
             device = torch.device("cpu")
+
     raster_settings = PointsRasterizationSettings(image_size=image_size, radius=radius,)
     renderer = PointsRenderer(
         rasterizer=PointsRasterizer(raster_settings=raster_settings),
@@ -113,7 +114,7 @@ def unproject_depth_image(image, mask, depth, camera):
     return points, rgb
 
 
-def load_cow_mesh(path="data/cow_mesh.obj"):
+def load_cow_mesh(path="data/cow.obj"):
     """
     Loads vertices and faces from an obj file.
 

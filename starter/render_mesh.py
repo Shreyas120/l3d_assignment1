@@ -33,6 +33,7 @@ def render_cow(
     faces = faces.unsqueeze(0)  # (N_f, 3) -> (1, N_f, 3)
     textures = torch.ones_like(vertices)  # (1, N_v, 3)
     textures = textures * torch.tensor(color)  # (1, N_v, 3)
+    print(vertices.dtype, faces.dtype, textures.dtype)
     mesh = pytorch3d.structures.Meshes(
         verts=vertices,
         faces=faces,
